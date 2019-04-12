@@ -1,0 +1,117 @@
+<!-- This file is created for manual testing, you shouldn't commit it to git, it's only for you -->
+<html>
+<head>
+  <title>Exchange</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+
+<main class="container">
+  <div class="jumbotron">
+    <h1>Exchange Rates</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <select id="from-currency" class="form-control" data-exchange-from-currency>
+              <option value="UAH">UAH</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="RUB">RUB</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <button id="vice-versa-currency" class="btn btn-block btn-default" data-exchange-vice-versa>↔</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <select id="to-currency" class="form-control" data-exchange-to-currency>
+              <option value="UAH">UAH</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="RUB">RUB</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="number" min="0" id="from-value" class="form-control" data-exchange-from-value/>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <button id="convert" class="btn btn-primary btn-block" data-exchange-convert>Convert</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <span id="to-value" class="form-control" data-exchange-to-value>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="history">
+        <!-- History graph will be here -->
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
+<script src="/js/jquery.exchange.js"></script>
+<script>
+  // If you need run some custom js, to debug smth you need to put it here, `jquery.exchange.js` must do only what is indicated in the task
+
+  // Uncomment this for Stage 4 and Stage 5 only
+  // $('#to-value').exchange()
+
+  // Uncomment this for Stage 6, Stage 7 and Stage 8 only
+   $('#to-value').exchange({
+     fromCurrencySelectEl: '#from-currency',
+     toCurrencySelectEl: '#to-currency',
+     convertBtn: '#convert',
+     viceVersaBtn: '#vice-versa-currency',
+     fromValueEl: '#from-value',
+     toValueEl: '#to-value',
+   });
+
+  // Uncomment this for Stage 8 only
+  //  const fromCurrencySelect = $('#from-currency');
+  //  const toCurrencySelect = $('#to-currency');
+  //  const historyEl = $('#history');
+  //
+  //  function updateRateHistory() {
+  //    historyEl.rateHistory('option', {
+  //      from: fromCurrencySelect.val(),
+  //      to: toCurrencySelect.val(),
+  //    });
+  //  }
+  //
+  //  fromCurrencySelect.change(updateRateHistory);
+  //  toCurrencySelect.change(updateRateHistory);
+  //
+  //  historyEl.rateHistory({
+  //    from: fromCurrencySelect.val(),
+  //    to: toCurrencySelect.val(),
+  //  });
+</script>
+</body>
+</html>
