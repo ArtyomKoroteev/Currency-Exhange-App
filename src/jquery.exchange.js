@@ -54,10 +54,11 @@
       if ($fromValue.val() != '' && $fromValue.val() != 0) {
         textValue = Number($fromValue.val());
         $.getJSON(API_URL, (data) => {
-          // eslint-disable-next-line guard-for-in
           for (const key in data) {
-            exchange = data[key] * textValue;
-            $toValue.text(exchange);
+            if ({}.hasOwnProperty.call(data, key)) {
+              exchange = data[key] * textValue;
+              $toValue.text(exchange);
+            }
           }
           API_URL = API_URL_RESET;
         });
