@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
-
+<style>
+#history {
+  height: 400px;
+  /* background: #000000; */
+}
+</style>
 <main class="container">
   <div class="jumbotron">
     <h1>Exchange Rates</h1>
@@ -97,21 +102,39 @@
   //  const fromCurrencySelect = $('#from-currency');
   //  const toCurrencySelect = $('#to-currency');
   //  const historyEl = $('#history');
-  //
+  //  historyEl.rateHistory({
+  //    from: fromCurrencySelect.val(),
+  //    to: toCurrencySelect.val(),
+  //  });
   //  function updateRateHistory() {
   //    historyEl.rateHistory('option', {
   //      from: fromCurrencySelect.val(),
   //      to: toCurrencySelect.val(),
   //    });
-  //  }
-  //
-  //  fromCurrencySelect.change(updateRateHistory);
-  //  toCurrencySelect.change(updateRateHistory);
-  //
-  //  historyEl.rateHistory({
-  //    from: fromCurrencySelect.val(),
-  //    to: toCurrencySelect.val(),
-  //  });
+  //  };
+     const fromCurrencySelect = $('#from-currency');
+   const toCurrencySelect = $('#to-currency');
+   const historyEl = $('#history');
+  
+   function updateRateHistory() {
+     historyEl.rateHistory('option', {
+       from: fromCurrencySelect.val(),
+       to: toCurrencySelect.val(),
+       day: 3,
+     });
+   }
+  
+   fromCurrencySelect.change(updateRateHistory);
+   toCurrencySelect.change(updateRateHistory);
+  
+   historyEl.rateHistory({
+     from: fromCurrencySelect.val(),
+     to: toCurrencySelect.val(),
+   });
+  
+   fromCurrencySelect.change(updateRateHistory);
+   toCurrencySelect.change(updateRateHistory);
+
 </script>
 </body>
 </html>

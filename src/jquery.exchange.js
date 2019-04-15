@@ -1,6 +1,5 @@
 (($) => {
   $.fn.exchange = (defaults) => {
-    // console.log(this);
     defaults = $.extend({
       fromCurrencySelectEl: '[data-exchange-from-currency]',
       toCurrencySelectEl: '[data-exchange-to-currency]',
@@ -10,10 +9,12 @@
       toValueEl: '[data-exchange-to-value]',
     }, defaults);
 
-    // eslint-disable-next-line guard-for-in
     for (const iterator in defaults) {
-      defaults[iterator] = $(defaults[iterator]);
+      if({}.hasOwnProperty.call(defaults, iterator)) {
+        defaults[iterator] = $(defaults[iterator]);
+      }
     }
+
     let $fromCurrency = defaults.fromCurrencySelectEl;
     let $toCurrency = defaults.toCurrencySelectEl;
     const $fromValue = defaults.fromValueEl;
@@ -67,4 +68,51 @@
       }
     };
   };
+  $.widget('exchange.rateHistory', {
+    options: {
+      baseColor: '#337ab7',
+      from: 'USD',
+      to: 'UAH',
+      key: '31bf09a9cfc18c66804c',
+      days: 7,
+    },
+    _create() {
+      this.element.css('background', this.options.baseColor);
+      this._refresh();
+    },
+
+    _refresh() {
+      let now = new Date();
+      // let END_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+      // let START_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+      // let day = now.getDate() - this.options.days;
+      console.log(now);
+      
+      // console.log(day);
+      
+      console.log(END_DAY, START_DAY);
+      let CURRENCY = `${this.options.from}_${this.options.to}`;
+      const KEY = this.options.key;
+      let API_URL = `https://free.currencyconverterapi.com/api/v6/convert?q=${CURRENCY}&compact=y&compact=ultra&apiKey=${KEY}&date=2019-04-7&endDate=${END_DAY}`; 
+      $.get(API_URL, (data) => {
+        console.log(CURRENCY);
+        data = data.results[CURRENCY].val;
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            // data[key];
+            console.log(`key: ${key}, value: ${data[key]}`);
+          }
+        } 
+        console.log(data);
+      });
+    },
+    _setOptions() {
+      this._superApply(arguments);
+      this._refresh();
+    },
+    _destroy() {
+      this.element.html('');
+    },
+  });
+  
 })(jQuery);
