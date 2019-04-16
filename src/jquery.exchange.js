@@ -10,7 +10,7 @@
     }, defaults);
 
     for (const iterator in defaults) {
-      if({}.hasOwnProperty.call(defaults, iterator)) {
+      if ({}.hasOwnProperty.call(defaults, iterator)) {
         defaults[iterator] = $(defaults[iterator]);
       }
     }
@@ -73,37 +73,40 @@
       baseColor: '#337ab7',
       from: 'USD',
       to: 'UAH',
-      key: '31bf09a9cfc18c66804c',
+      key: 'dbd8a80ca3e4aebe84d5',
       days: 7,
     },
     _create() {
       this.element.css('background', this.options.baseColor);
       this._refresh();
     },
-
     _refresh() {
       let now = new Date();
-      // let END_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
-      // let START_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
-      // let day = now.getDate() - this.options.days;
-      console.log(now);
-      
-      // console.log(day);
-      
-      console.log(END_DAY, START_DAY);
+      let END_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+      let START_DAY = `${now.getFullYear()}-${now.getMonth()+1}-${(now.getDate() - (this.options.days-1))}`;
       let CURRENCY = `${this.options.from}_${this.options.to}`;
       const KEY = this.options.key;
-      let API_URL = `https://free.currencyconverterapi.com/api/v6/convert?q=${CURRENCY}&compact=y&compact=ultra&apiKey=${KEY}&date=2019-04-7&endDate=${END_DAY}`; 
+      let API_URL = `https://free.currencyconverterapi.com/api/v6/convert?q=${CURRENCY}&compact=y&compact=ultra&apiKey=${KEY}&date=${START_DAY}&endDate=${END_DAY}`;
+      let values = [];
+      let date = [];
       $.get(API_URL, (data) => {
-        console.log(CURRENCY);
+
+        this.element.html('');
         data = data.results[CURRENCY].val;
         for (const key in data) {
           if (data.hasOwnProperty(key)) {
-            // data[key];
-            console.log(`key: ${key}, value: ${data[key]}`);
+            values.push(data[key]);
+            date.push(key);
+            this.element.append('<div class="bar"></div>');
+            console.log(data);
           }
-        } 
-        console.log(data);
+        }
+        let maxValue = Math.max.apply(null, values);
+        let minValue = Math.floor(Math.min.apply(null, values));
+        this.element.find('.bar').each((i, elem) => {
+          $(elem).css('height', `${(values[i]*100)/maxValue}%`);
+          $(elem).text(`${date[i]} ${values[i]}`);
+        });
       });
     },
     _setOptions() {
@@ -114,5 +117,5 @@
       this.element.html('');
     },
   });
-  
+
 })(jQuery);
