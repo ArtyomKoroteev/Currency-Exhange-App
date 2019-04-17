@@ -98,13 +98,14 @@
             values.push(data[key]);
             date.push(key);
             this.element.append('<div class="bar"></div>');
-            console.log(data);
           }
         }
-        let maxValue = Math.max.apply(null, values);
-        let minValue = Math.floor(Math.min.apply(null, values));
+        let maxValue = Math.floor(Math.max.apply(null, values) + 1);
+        let minValue = Math.floor(Math.min.apply(null, values) - 1);
+        console.log(minValue);
+        
         this.element.find('.bar').each((i, elem) => {
-          $(elem).css('height', `${(values[i]*100)/maxValue}%`);
+          $(elem).css('height', `${((values[i] - minValue)*0.3)*100}%`);
           $(elem).text(`${date[i]} ${values[i]}`);
         });
       });
